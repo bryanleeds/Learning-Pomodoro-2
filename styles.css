@@ -75,13 +75,13 @@ h1 {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #3182ce, #2c5aa0);
+    background: linear-gradient(135deg, #87ceeb, #5f9ea0);
     color: white;
 }
 
 .btn-primary:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(49, 130, 206, 0.3);
+    box-shadow: 0 10px 20px rgba(135, 206, 235, 0.3);
 }
 
 .btn-secondary {
@@ -114,14 +114,14 @@ h1 {
 }
 
 .mode-btn:hover {
-    border-color: #3182ce;
-    background: #ebf8ff;
+    border-color: #87ceeb;
+    background: #f0f8ff;
 }
 
 .mode-btn.active {
-    background: #3182ce;
+    background: #87ceeb;
     color: white;
-    border-color: #3182ce;
+    border-color: #87ceeb;
 }
 
 .progress-container {
@@ -138,7 +138,7 @@ h1 {
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #3182ce, #2c5aa0);
+    background: linear-gradient(90deg, #87ceeb, #5f9ea0);
     width: 0%;
     transition: width 0.3s ease;
 }
