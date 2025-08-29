@@ -23,12 +23,14 @@ class PomodoroTimer {
         this.sessionCountElement = document.getElementById('session-count');
         this.totalTimeElement = document.getElementById('total-time');
         this.modeButtons = document.querySelectorAll('.mode-btn');
+        this.restIcon = document.getElementById('rest-icon');
     }
     
     bindEvents() {
         this.startButton.addEventListener('click', () => this.start());
         this.pauseButton.addEventListener('click', () => this.pause());
         this.resetButton.addEventListener('click', () => this.reset());
+        this.restIcon.addEventListener('click', () => this.takeQuickRest());
         
         this.modeButtons.forEach(button => {
             button.addEventListener('click', (e) => this.switchMode(e));
