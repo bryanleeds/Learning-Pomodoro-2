@@ -7,6 +7,7 @@ class PomodoroTimer {
         this.currentMode = 'work';
         this.sessionCount = 0;
         this.totalSessionTime = 0;
+        this.currentTask = '';
         
         this.initializeElements();
         this.bindEvents();
@@ -24,17 +25,84 @@ class PomodoroTimer {
         this.totalTimeElement = document.getElementById('total-time');
         this.modeButtons = document.querySelectorAll('.mode-btn');
         this.restIcon = document.getElementById('rest-icon');
+        
+        // New elements for task functionality
+        this.taskModal = document.getElementById('task-modal');
+        this.taskInput = document.getElementById('task-input');
+        this.startTaskButton = document.getElementById('start-task');
+        this.cancelTaskButton = document.getElementById('cancel-task');
+        this.taskDisplay = document.getElementById('task-display');
+        this.taskText = document.getElementById('task-text');
     }
     
     bindEvents() {
-        this.startButton.addEventListener('click', () => this.start());
+        this.startButton.addEventListener('click', () => this.handleStart());
         this.pauseButton.addEventListener('click', () => this.pause());
         this.resetButton.addEventListener('click', () => this.reset());
-        this.restIcon.addEventListener('click', () => this.takeQuickRest());
+        
+        if (this.restIcon) {
+            this.restIcon.addEventListener('click', () => this.takeQuickRest());
+        }
         
         this.modeButtons.forEach(button => {
             button.addEventListener('click', (e) => this.switchMode(e));
         });
+        
+        // New event listeners for task modal
+        this.startTaskButton.addEventListener('click', () => this.startWithTask());
+        this.cancelTaskButton.addEventListener('click', () => this.hideTaskModal());
+        this.taskInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                this.startWithTask();
+            }
+        });
+        
+        // Close modal when clicking outside
+        this.taskModal.addEventListener('click', (e) => {
+            if (e.target === this.taskModal) {
+                this.hideTaskModal();
+            }
+        });
+    }
+    
+    handleStart() {
+        if (this.currentMode === 'work') {
+            this.showTaskModal();
+        } else {
+            this.start();
+        }
+    }
+    
+    showTaskModal() {
+        this.taskModal.style.display = 'block';
+        this.taskInput.focus();
+        this.taskInput.value = '';
+    }
+    
+    hideTaskModal() {
+        this.taskModal.style.display = 'none';
+    }
+    
+    startWithTask() {
+        const task = this.taskInput.value.trim();
+        if (task) {
+            this.currentTask = task;
+            this.showTaskDisplay();
+            this.hideTaskModal();
+            this.start();
+        } else {
+            this.taskInput.focus();
+        }
+    }
+    
+    showTaskDisplay() {
+        this.taskText.textContent = this.currentTask;
+        this.taskDisplay.style.display = 'block';
+    }
+    
+    hideTaskDisplay() {
+        this.taskDisplay.style.display = 'none';
+        this.currentTask = '';
     }
     
     start() {
@@ -69,6 +137,11 @@ class PomodoroTimer {
         this.updateDisplay();
         // Reset title when timer is reset
         document.title = 'Pomodoro Timer';
+        
+        // Hide task display when resetting
+        if (this.currentMode !== 'work') {
+            this.hideTaskDisplay();
+        }
     }
     
     switchMode(event) {
@@ -87,6 +160,11 @@ class PomodoroTimer {
         
         // Update status text
         this.updateStatusText();
+        
+        // Hide task display when switching to non-work modes
+        if (mode !== 'work') {
+            this.hideTaskDisplay();
+        }
         
         // Reset and update display
         this.reset();

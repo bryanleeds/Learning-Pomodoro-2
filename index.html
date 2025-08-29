@@ -8,7 +8,12 @@
 </head>
 <body>
     <div class="container">
-        <h1>🍅 Pomodoro Time 🍅</h1>
+        <h1>🍅 Pomodoro Timer</h1>
+        
+        <div class="task-display" id="task-display" style="display: none;">
+            <div class="task-label">Current Task:</div>
+            <div class="task-text" id="task-text"></div>
+        </div>
         
         <div class="timer-display">
             <div class="time" id="time">30:00</div>
@@ -36,6 +41,18 @@
         <div class="session-info">
             <div class="session-count">Session: <span id="session-count">0</span></div>
             <div class="total-time">Total Time: <span id="total-time">0h 0m</span></div>
+        </div>
+    </div>
+    
+    <!-- Task Input Modal -->
+    <div class="modal" id="task-modal">
+        <div class="modal-content">
+            <h2>What are you working on?</h2>
+            <input type="text" id="task-input" placeholder="Enter your task..." maxlength="100">
+            <div class="modal-buttons">
+                <button id="start-task" class="btn btn-primary">Start Working</button>
+                <button id="cancel-task" class="btn btn-secondary">Cancel</button>
+            </div>
         </div>
     </div>
     
